@@ -85,7 +85,16 @@ const getUnwind = ({ groupType }) => {
   return null;
 };
 
-export default ({ valueType, groupType, operatorType }) => {
+const getContextActivityTypeMatch = (groupType, pattern) => {
+  if (groupType.startsWith('statement.context.contextActivities.') && typeof pattern === 'string') {
+    return {
+      [`${groupType}.definition.type`]: pattern
+    }
+  }
+  return null;
+};
+
+export default ({ valueType, groupType, operatorType, contextActivityDefinitionType }) => {
   const valueOpCase = getValueOpCase({ valueType, operatorType });
   const existsMatch = getExistsMatch({ valueType, groupType, valueOpCase });
 
@@ -99,7 +108,9 @@ export default ({ valueType, groupType, operatorType }) => {
   let preReqs;
   if (unwind) {
     const unwindStage = createStagePipeline('$unwind', unwind);
-    preReqs = matchStage.concat(unwindStage).concat(projectStage);
+    const contextActivityTypeMatch = getContextActivityTypeMatch(groupType, contextActivityDefinitionType);
+    const contextActivityTypeMatchStage = createStagePipeline('$match', contextActivityTypeMatch);
+    preReqs = matchStage.concat(unwindStage).concat(contextActivityTypeMatchStage).concat(projectStage);
   } else {
     preReqs = matchStage.concat(projectStage);
   }

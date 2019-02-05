@@ -36,6 +36,7 @@ export class BarAxesEditor extends BaseAxesEditor {
             changeOperator={this.changeAxes.bind(this, 'operator')} />
         </div>
       </div>
+
       <div className="form-group">
         <label htmlFor="toggleInput" className="clearfix">Y Axis</label>
         <div className="form-group">
@@ -54,6 +55,26 @@ export class BarAxesEditor extends BaseAxesEditor {
             changeGroup={this.changeAxes.bind(this, 'group')} />
         </div>
       </div>
+
+      {this.props.model.getIn(['axesgroup', 'searchString'], 'Y-Axis').startsWith('statement.context.contextActivities.') && (
+        <div className="form-group">
+          <label htmlFor="toggleInput" className="clearfix">Content Activities Definition Type</label>
+          <DebounceInput
+            id={'xAxisLabel'}
+            className="form-control"
+            placeholder={this.getAxesValue('group', new Map()).get('contextActivityDefinitionType', 'All')}
+            debounceTimeout={377}
+            value={this.getAxesValue('group', new Map()).get('contextActivityDefinitionType', '')}
+            onChange={e => {
+              const group = this.getAxesValue('group');
+              if (group) {
+                const updatedGroup = group.set('contextActivityDefinitionType', e.target.value);
+                this.changeAxes('group', updatedGroup);
+              }
+            }}
+            />
+        </div>
+      )}
     </div>
   );
 }
