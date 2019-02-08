@@ -7,6 +7,7 @@ import date from 'ui/utils/visualisations/projections/date';
 import value from 'ui/utils/visualisations/projections/value';
 import model from 'ui/utils/visualisations/projections/model';
 import getOperator from 'ui/utils/visualisations/helpers/getOperator';
+import { isContextActivity } from 'ui/utils/visualisations';
 import uniqueModifierGrouper from './uniqueModifierGrouper';
 import uniqueStatementModifierGrouper from './uniqueStatementModifierGrouper';
 import uniqueTotalGrouper from './uniqueTotalGrouper';
@@ -85,11 +86,17 @@ const getUnwind = ({ groupType }) => {
   return null;
 };
 
+/**
+ * @param {string} groupType
+ * @param {any} pattern
+ *
+ * @returns object|null
+ */
 const getContextActivityTypeMatch = (groupType, pattern) => {
-  if (groupType.startsWith('statement.context.contextActivities.') && typeof pattern === 'string') {
+  if (isContextActivity(groupType) && typeof pattern === 'string') {
     return {
       [`${groupType}.definition.type`]: pattern
-    }
+    };
   }
   return null;
 };
@@ -109,8 +116,12 @@ export default ({ valueType, groupType, operatorType, contextActivityDefinitionT
   if (unwind) {
     const unwindStage = createStagePipeline('$unwind', unwind);
     const contextActivityTypeMatch = getContextActivityTypeMatch(groupType, contextActivityDefinitionType);
-    const contextActivityTypeMatchStage = createStagePipeline('$match', contextActivityTypeMatch);
-    preReqs = matchStage.concat(unwindStage).concat(contextActivityTypeMatchStage).concat(projectStage);
+    if (contextActivityTypeMatch) {
+      const contextActivityTypeMatchStage = createStagePipeline('$match', contextActivityTypeMatch);
+      preReqs = matchStage.concat(unwindStage).concat(contextActivityTypeMatchStage).concat(projectStage);
+    } else {
+      preReqs = matchStage.concat(unwindStage).concat(projectStage);
+    }
   } else {
     preReqs = matchStage.concat(projectStage);
   }

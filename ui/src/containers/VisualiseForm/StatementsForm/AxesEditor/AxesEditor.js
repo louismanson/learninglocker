@@ -15,11 +15,11 @@ import ScatterAxesEditor from './ScatterAxesEditor';
 import CounterAxesEditor from './CounterAxesEditor';
 import PieAxesEditor from './PieAxesEditor';
 
-export default ({ model }) => {
+export default ({ model, queryBuilderCacheValueModels }) => {
   switch (model.get('type')) {
     case LEADERBOARD:
     case POPULARACTIVITIES:
-      return <BarAxesEditor model={model} />;
+      return <BarAxesEditor model={model} queryBuilderCacheValueModels={queryBuilderCacheValueModels} />;
     case XVSY: return <ScatterAxesEditor model={model} />;
     case STATEMENTS: return <ColumnAxesEditor model={model} />;
     case FREQUENCY: return <LineAxesEditor model={model} />;
