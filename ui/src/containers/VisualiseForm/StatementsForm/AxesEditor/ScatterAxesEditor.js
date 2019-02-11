@@ -81,11 +81,10 @@ export class ScatterAxesEditor extends BaseAxesEditor {
       </div>
 
       <DefinitionTypeSelector
-          visualisationModel={this.props.model}
-          queryBuilderCacheValueModels={this.props.queryBuilderCacheValueModels}
-          group={this.getAxesValue('group')}
-          onChangeGroup={g => this.changeAxes('group', g)}
-          />
+        visualisationModel={this.props.model}
+        queryBuilderCacheValueModels={this.props.queryBuilderCacheValueModels}
+        group={this.getAxesValue('group')}
+        onChangeGroup={g => this.changeAxes('group', g)} />
 
       <hr />
       {this.renderAxis('x')}

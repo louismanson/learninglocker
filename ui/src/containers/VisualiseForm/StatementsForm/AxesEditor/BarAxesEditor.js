@@ -72,8 +72,7 @@ export class BarAxesEditor extends BaseAxesEditor {
         visualisationModel={this.props.model}
         queryBuilderCacheValueModels={this.props.queryBuilderCacheValueModels}
         group={this.getAxesValue('group')}
-        onChangeGroup={g => this.changeAxes('group', g)}
-        />
+        onChangeGroup={g => this.changeAxes('group', g)} />
     </div>
   );
 }

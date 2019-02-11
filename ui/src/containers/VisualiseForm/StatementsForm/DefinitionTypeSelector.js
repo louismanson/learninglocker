@@ -44,6 +44,6 @@ const DefinitionTypeSelector = ({
         value={group.get('contextActivityDefinitionType', null)} />
     </div>
   );
-}
+};
 
 export default DefinitionTypeSelector;
