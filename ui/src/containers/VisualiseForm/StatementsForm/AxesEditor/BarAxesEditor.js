@@ -3,9 +3,8 @@ import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { VISUALISE_AXES_PREFIX } from 'lib/constants/visualise';
 import { updateModel } from 'ui/redux/modules/models';
-import { isContextActivity } from 'ui/utils/visualisations';
-import Dropdown from 'ui/components/Material/Dropdown';
 import DebounceInput from 'react-debounce-input';
+import DefinitionTypeSelector from 'ui/containers/VisualiseForm/StatementsForm/DefinitionTypeSelector';
 import CountEditor from './CountEditor';
 import GroupEditor from './GroupEditor';
 import BaseAxesEditor from './BaseAxesEditor';
@@ -25,45 +24,6 @@ export class BarAxesEditor extends BaseAxesEditor {
 
     return !prevAxes.equals(nextAxes) || !isEqualsQueryBuilderCacheValue;
   };
-
-  renderDefinitionTypeSelector = () => {
-    const searchPath = this.props.model.getIn(['axesgroup', 'searchString'], '');
-    if (!isContextActivity(searchPath)) {
-      return null;
-    }
-
-    const defaultOption = {
-      value: null,
-      label: 'All Definition Types'
-    };
-
-    return (
-      <div className="form-group">
-        <label htmlFor="toggleInput" className="clearfix">Content Activities Definition Type</label>
-
-        <Dropdown
-          auto
-          onChange={(value) => {
-            const group = this.getAxesValue('group');
-            if (group) {
-              const updatedGroup = group.set('contextActivityDefinitionType', value);
-              this.changeAxes('group', updatedGroup);
-            }
-          }}
-          source={[defaultOption].concat(
-            this.props.queryBuilderCacheValueModels
-            .filter(c => c.get('path', '') === `${this.props.model.getIn(['axesgroup', 'searchString'], '')}.definition.type`)
-            .map(c => ({
-              value: c.get('value'),
-              label: c.get('value'),
-            }))
-            .toList()
-            .toJS()
-          )}
-          value={this.getAxesValue('group', new Map()).get('contextActivityDefinitionType', null)} />
-      </div>
-    );
-  }
 
   render = () => (
     <div>
@@ -108,7 +68,12 @@ export class BarAxesEditor extends BaseAxesEditor {
         </div>
       </div>
 
-      {this.renderDefinitionTypeSelector()}
+      <DefinitionTypeSelector
+        visualisationModel={this.props.model}
+        queryBuilderCacheValueModels={this.props.queryBuilderCacheValueModels}
+        group={this.getAxesValue('group')}
+        onChangeGroup={g => this.changeAxes('group', g)}
+        />
     </div>
   );
 }

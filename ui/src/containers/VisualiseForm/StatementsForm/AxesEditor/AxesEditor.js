@@ -21,7 +21,7 @@ export default ({ model, queryBuilderCacheValueModels }) => {
     case POPULARACTIVITIES:
       return <BarAxesEditor model={model} queryBuilderCacheValueModels={queryBuilderCacheValueModels} />;
     case XVSY: return <ScatterAxesEditor model={model} />;
-    case STATEMENTS: return <ColumnAxesEditor model={model} />;
+    case STATEMENTS: return <ColumnAxesEditor model={model} queryBuilderCacheValueModels={queryBuilderCacheValueModels} />;
     case FREQUENCY: return <LineAxesEditor model={model} />;
     case COUNTER: return <CounterAxesEditor model={model} />;
     case PIE: return <PieAxesEditor model={model} />;
