@@ -3,7 +3,7 @@ import { Map } from 'immutable';
 import { connect } from 'react-redux';
 import { VISUALISE_AXES_PREFIX } from 'lib/constants/visualise';
 import { updateModel } from 'ui/redux/modules/models';
-import DefinitionTypeSelector from 'ui/containers/VisualiseForm/StatementsForm/DefinitionTypeSelector';
+import DefinitionTypeSelector from './DefinitionTypeSelector';
 import CountEditor from './CountEditor';
 import GroupEditor from './GroupEditor';
 import BaseAxesEditor from './BaseAxesEditor';
