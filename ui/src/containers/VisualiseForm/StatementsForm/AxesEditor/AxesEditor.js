@@ -24,7 +24,7 @@ export default ({ model, queryBuilderCacheValueModels }) => {
     case STATEMENTS: return <ColumnAxesEditor model={model} queryBuilderCacheValueModels={queryBuilderCacheValueModels} />;
     case FREQUENCY: return <LineAxesEditor model={model} />;
     case COUNTER: return <CounterAxesEditor model={model} />;
-    case PIE: return <PieAxesEditor model={model} />;
+    case PIE: return <PieAxesEditor model={model} queryBuilderCacheValueModels={queryBuilderCacheValueModels} />;
     default: return <div>renderDefault</div>;
   }
 };
