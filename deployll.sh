@@ -430,7 +430,7 @@ function base_install ()
                     output_log "Cloning main repo with user: ${GIT_USER}"
                 fi
             else
-                MAIN_REPO=https://github.com/louismanson/learninglocker
+                MAIN_REPO=https://github.com/louismanson/learninglocker/tree/louis.dev_counterTime
             fi
             # clone repo
             git clone -q -b ${GIT_BRANCH} $MAIN_REPO ${WEBAPP_SUBDIR}
