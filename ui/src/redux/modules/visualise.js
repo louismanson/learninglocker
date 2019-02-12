@@ -189,6 +189,7 @@ export const visualisationPiplelinesSelector = (
     const journey = visualisation.get('journey');
     const previewPeriod = visualisation.get('previewPeriod');
     const benchmarkingEnabled = visualisation.get('benchmarkingEnabled', false);
+    const timeEnabled = visualisation.get('timeEnabled', false);
     const queries = visualisation.get('filters', new List()).map((vFilter) => {
       if (!filter) {
         return vFilter;
