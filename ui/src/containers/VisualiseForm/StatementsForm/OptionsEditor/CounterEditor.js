@@ -13,6 +13,13 @@ const CounterEditorComponent = ({ model, benchmarkingHandler }) => (
         checked={model.get('benchmarkingEnabled')}
         onChange={benchmarkingHandler} />
     </div>
+    <label htmlFor="toggleInput">Grouping as Time</label>
+    <div id="toggleInput">
+      <Switch
+        id={'counterEditorComponent'}
+        checked={model.get('benchmarkingEnabled')}
+        onChange={benchmarkingHandler} />
+    </div>
   </div>
 );
 
