@@ -430,7 +430,7 @@ function base_install ()
                     output_log "Cloning main repo with user: ${GIT_USER}"
                 fi
             else
-                MAIN_REPO=https://github.com/louismanson/learninglocker/tree/louis.dev_counterTime
+                MAIN_REPO=https://github.com/louismanson/learninglocker
             fi
             # clone repo
             git clone -q -b ${GIT_BRANCH} $MAIN_REPO ${WEBAPP_SUBDIR}
@@ -1188,7 +1188,7 @@ DEFAULT_INSTALL_TYPE=l
 LOCAL_PATH=false
 LOCAL_USER=false
 TMPDIR=$_TD/.tmpdist
-GIT_BRANCH="master"
+GIT_BRANCH="louis.dev_counterTime"
 GIT_USER=false
 GIT_PASS=false
 XAPI_BRANCH="master"
