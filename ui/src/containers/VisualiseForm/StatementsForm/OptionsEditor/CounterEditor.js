@@ -4,7 +4,7 @@ import { compose, withHandlers } from 'recompose';
 import { updateModel } from 'ui/redux/modules/models';
 import Switch from 'ui/components/Material/Switch';
 
-const CounterEditorComponent = ({ model, benchmarkingHandler }) => (
+const CounterEditorComponent = ({ model, benchmarkingHandler, timeHandler }) => (
   <div className="form-group">
     <label htmlFor="toggleInput">Enable Benchmarking</label>
     <div id="toggleInput">
@@ -17,8 +17,8 @@ const CounterEditorComponent = ({ model, benchmarkingHandler }) => (
     <div id="toggleInput">
       <Switch
         id={'counterEditorComponent'}
-        checked={model.get('benchmarkingEnabled')}
-        onChange={benchmarkingHandler} />
+        checked={model.get('timeEnabled')}
+        onChange={timeHandler} />
     </div>
   </div>
 );
@@ -33,6 +33,14 @@ const CounterEditor = compose(
         id: model.get('_id'),
         path: 'benchmarkingEnabled',
         value: !model.get('benchmarkingEnabled')
+      });
+    },
+    timeHandler: ({ updateModel: updateModelAction, model }) => {
+      updateModelAction({
+        schema: 'visualisation',
+        id: model.get('_id'),
+        path: 'timeEnabled',
+        value: !model.get('timeEnabled')
       });
     }
   })
