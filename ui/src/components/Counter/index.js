@@ -42,15 +42,39 @@ const resultsIconStyles = {
   width: '40px',
 };
 
-const renderCount = ({ color, count, tooltip, hasBenchmark }) => (
-  <TooltipLink
-    style={{ color, height: hasBenchmark ? null : '100%' }}
-    label={formatShortNumber(count)}
-    tooltip={tooltip}
-    tooltipPosition="top"
-    tooltipDelay={600}
-    active />
+const renderCount = ({ color, count, tooltip, hasBenchmark, isTime }) => { 
+  let hours = 0;
+  let minutes = 0;
+  let result = 0;
+  if(isTime){
+    if(count>3600){
+      hours = Math.floor(count/3600);
+      let min = Math.floor(count%3600);
+      if(min>60){
+        minutes = Math.floor(min/60);
+      }
+      result = formatShortNumber(hours)+'h '+ formatShortNumber(minutes)+'m';
+    }else{
+      if(count>60){
+        result = formatShortNumber(Math.floor(count/60))+' min';
+      }else{
+        result = formatShortNumber(Math.floor(count))+' seg';
+      } 
+    }
+    
+  }else{
+    result = formatShortNumber(Math.floor(count));
+  }
+  return( 
+    <TooltipLink
+      style={{ color, height: hasBenchmark ? null : '100%' }}
+      label={result}
+      tooltip={tooltip}
+      tooltipPosition="top"
+      tooltipDelay={600}
+      active />
   );
+};
 
 const renderBenchmark = ({ percentage, model }) => {
   if (percentage.result === 'N/A') {
@@ -96,10 +120,11 @@ const renderCounter = ({ color, results, model, height, width }) => {
   const benchmarkCount = hasBenchmark ? getBenchmarkResultCount(results) : null;
   const count = getResultCount(results);
   const percentage = getPercentage(count, benchmarkCount);
+  const isTime = model.get('timeEnabled') == true;
 
   const tooltip = hasBenchmark ? formatBenchmarkTooltip({ count, benchmarkCount }) : formatTooltip(count);
   const countFontsize = getCountFontsize({ height, width, hasBenchmark, maxSize });
-  const renderedCount = renderCount({ color, count, tooltip, hasBenchmark });
+  const renderedCount = renderCount({ color, count, tooltip, hasBenchmark, isTime });
   const renderedBenchmark = hasBenchmark ? renderBenchmark({ percentage, model }) : null;
 
 
