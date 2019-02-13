@@ -9,6 +9,7 @@ export default (
   previewPeriod,
   id,
   benchmarkingEnabled = false,
+  timeEnabled = false,
   today = moment().utc().startOf('day')
 ) => {
   if (benchmarkingEnabled) {
@@ -18,7 +19,7 @@ export default (
           query, axes, type, previewPeriod, id, today
         })),
         pipelineFromQuery(new Map({
-          query, axes, type, previewPeriod, id, today, benchmarkingEnabled
+          query, axes, type, previewPeriod, id, today, benchmarkingEnabled, timeEnabled
         }))
       ])
     ).flatten(1);
